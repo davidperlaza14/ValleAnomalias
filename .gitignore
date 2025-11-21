@@ -1,0 +1,58 @@
+# ─── Python (venv, cache, compiled) ───
+venv/
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ─── Jupyter / IPython ───
+*.ipynb_checkpoints/
+out_*.ipynb          # notebooks de salida papermill
+.ipynbTrash
+
+# ─── Entornos de IDE ───
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── macOS / Windows ───
+.DS_Store
+Thumbs.db
+
+# ─── Docker ───
+*.log
+docker-compose.override.yml
+
+# ─── ELK / Logs grandes ───
+*.log
+1_Data/gov.log
+*.ndjson              # exportaciones masivas de Kibana (opcional)
+
+# ─── Modelos y datos pesados ───
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.hdf5
+
+# ─── Imágenes / PDFs generados ───
+*.png
+*.jpg
+*.jpeg
+*.pdf
+!5_Report/assets/*.png        # dejamos las que usamos en el reporte
+!6_Playbook/playbook.pdf      # dejamos el PDF final
+!5_Report/salida/*.pdf        # dejamos el reporte ejecutivo
+
+# ─── Carpetas de salida temporal ───
+tmp/
+temp/
+.out/
+out/
+tickets/               # tickets de prueba (puedes ignorar si quieres)
+*.csv                  # predicciones grandes (opcional, descomenta si pesan)

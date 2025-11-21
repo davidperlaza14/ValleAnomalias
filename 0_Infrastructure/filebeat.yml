@@ -1,0 +1,14 @@
+# Filebeat: lee JSON, mete todo en elasticsearch
+filebeat.inputs:
+  - type: log
+    paths:
+      - /logs/*.log                    # Archivos que vayamos creando
+    json.keys_under_root: true         # Aplanar JSON
+    json.add_error_key: true           # Si hay línea malformada, lo etiqueta
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+  index: "logs-anomalia-%{+yyyy.MM.dd}"
+
+setup.template.enabled: false          # No sobrescriba plantillas
+logging.level: error                   # Solo errores en consola

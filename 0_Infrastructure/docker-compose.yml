@@ -1,0 +1,43 @@
+# Stack ELK (Elasticsearch + Kibana + Filebeat) sin seguridad para laboratorio
+version: "3.9"
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+    container_name: es-lab
+    environment:
+      - discovery.type=single-node      # Un solo nodo, evita votaciones
+      - xpack.security.enabled=false    # Sin claves, simplifica
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"    # RAM que necesita
+    ports:
+      - "9200:9200"                     # API REST
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.1
+    container_name: kibana-lab
+    ports:
+      - "5601:5601"                     # Interfaz web
+    depends_on:
+      - elasticsearch
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.11.1
+    container_name: filebeat-lab
+    user: root                          # Para leer logs de host
+    volumes:
+      - ../1_Data:/logs:ro              # Monte: nuestros logs
+      - ./filebeat.yml:/tmp/filebeat.yml:ro
+    command: >
+      bash -c "
+        cp /tmp/filebeat.yml /usr/share/filebeat/filebeat.yml &&
+        chown root:root /usr/share/filebeat/filebeat.yml &&
+        chmod 644 /usr/share/filebeat/filebeat.yml &&
+        /usr/share/filebeat/filebeat -e
+      "    
+    depends_on:
+      - elasticsearch
+
+volumes:
+  esdata:                                # Persistencia de índices
