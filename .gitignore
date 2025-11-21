@@ -29,8 +29,7 @@ Thumbs.db
 docker-compose.override.yml
 
 # ─── ELK / Logs grandes ───
-*.log
-1_Data/gov.log
+
 *.ndjson              # exportaciones masivas de Kibana (opcional)
 
 # ─── Modelos y datos pesados ───
