@@ -63,11 +63,11 @@ def log_ataque():
     return lg
 
 def main():
-    TOTAL = 1_000_000
+    TOTAL = 150_000
     RUTA  = "./1_Data/gov.log"
     with open(RUTA, "w") as f:
         for i in range(1, TOTAL + 1):
-            if random.random() < 0.05:      # 5 % ataques
+            if random.random() < 0.15:      # 5 % ataques
                 f.write(json.dumps(log_ataque()) + "\n")
             else:
                 f.write(json.dumps(log_normal()) + "\n")
